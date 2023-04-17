@@ -4,7 +4,8 @@ import pandas as pd
 from Bio import 
 
 Genome_fasta_file_path = input(str("Enter path to genome fasta file :")) # path to genome fasta file
-Protein_table_file_path = input(str("Enter path to protein table : "))
+Protein_table_file_path = input(str("Enter path to protein table : ")) # path to protein table
+Organism_name = input(str("Enter the output file name :")) # File name for output
 genome = SeqIO.read(Genome_fasta_file_path , "fasta") #Fasta
 genome_seq = genome.seq
 genome_df = pd.read_csv(Protein_table_file_path) #Csv
@@ -24,8 +25,8 @@ for i in range(0,len(genome_df["Start"])):
     
 # Write a file for the above sequences
 
-fasta_file = open("Human\mRNA_fasta" + Chr + "_output.fasta", "w") #Output file
+fasta_file = open(Organism_name +"_output.fasta", "w") #Output file
 for i in range(0,len(genome_df["Start"])):
-    fasta_file.write(">Human|" + Chr[1:] + "|Genome_ID:" + str(genome_df["Accession"][i]) + "|Codes_for:" + str(genome_df["Protein Name"][i])  + "|Locus_tag:" + str(genome_df["Locus tag"][i]))
+    fasta_file.write(">" + Organism_name  + "|Genome_ID:" + str(genome_df["Accession"][i]) + "|Codes_for:" + str(genome_df["Protein Name"][i])  + "|Locus_tag:" + str(genome_df["Locus tag"][i]))
     fasta_file.write("\n" + mRNA_seq_list[i] + "\n\n")
 fasta_file.close()
